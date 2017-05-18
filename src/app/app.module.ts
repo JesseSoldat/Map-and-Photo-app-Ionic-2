@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
+import { IonicStorageModule } from '@ionic/storage';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
 import { MyApp } from './app.component';
@@ -11,9 +12,11 @@ import { HomePage } from '../pages/home/home';
 import { AddPlacePage } from "../pages/add-place/add-place";
 import { PlacePage } from "../pages/place/place";
 import { SetLocationPage } from "../pages/set-location/set-location";
-import { PlaceService } from '../services/place';
+import { PlacesService } from '../services/places';
 
 import { Geolocation } from '@ionic-native/geolocation';
+import { Camera } from '@ionic-native/camera';
+// import { Storage } from '@ionic/storage';
 
 
 @NgModule({
@@ -27,6 +30,7 @@ import { Geolocation } from '@ionic-native/geolocation';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyC3q7NMdCJQI6-uUDf39e4YUepsNawbM78'
     })
@@ -43,8 +47,9 @@ import { Geolocation } from '@ionic-native/geolocation';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    PlaceService,
-    Geolocation
+    PlacesService,
+    Geolocation,
+    Camera
   ]
 })
 export class AppModule {}

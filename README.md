@@ -1,3 +1,15 @@
+1. ionic cordova platform add android
+2. ionic cordova run android
+
+ionic cordova run android --device
+ionic cordova platform add browser
+ionic cordova run browser
+--livereload
+
+
+ionic serve runs your app as a website (meaning it doesn't have any Cordova capabilities)
+ionic run browser runs your app in the Cordova browser platform, which will inject cordova.js and any plugins that have browser capabilities
+
 This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
 
 ## How to use this template
