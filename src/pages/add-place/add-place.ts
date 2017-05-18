@@ -11,17 +11,17 @@ import { Location } from '../../models/location';
 })
 export class AddPlacePage {
 	location: Location = {
-		lat: 33.7748,
-    lng: 84.2963
+		lat: 33.774828,
+    lng: -84.296312
 	};
 	locationIsSet = false;
 	imageUrl = '';
 
-  constructor(private modealCtrl: ModalController) {
+  constructor(private modealCtrl: ModalController,
+              private loadingCtrl: LoadingController,
+              private toastCtrl: ToastController) {
   }
 
-  ionViewDidLoad() {
-  }
 
   onSubmit(form: NgForm) {
 
@@ -31,11 +31,20 @@ export class AddPlacePage {
   	const modal = this.modealCtrl.create(SetLocationPage,
   		{location: this.location});
   	modal.present();
+    modal.onDidDismiss(data => {
+      if(data) {
+        this.location = data.location;
+        this.locationIsSet = true;
+      }
+    });
 
   }
 
   onLocate() {
-
+    const loader = this.loadingCtrl.create({
+      content: 'Getting your Location...'
+    });
+    // loader.present();
   }
 
   onTakePhoto() {

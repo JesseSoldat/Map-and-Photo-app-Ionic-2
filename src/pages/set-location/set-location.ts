@@ -20,4 +20,16 @@ export class SetLocationPage {
    
   }
 
+  onSetMarker(event) {
+
+  }
+
+  onConfirm() {
+
+  }
+
+  onAbort() {
+  	this.viewCtrl.dismiss();
+  }
+
 }
