@@ -14,15 +14,16 @@ export class PlacesService {
 		location: Location, imageUrl: string) {
 		const place = new Place(title, description, location, imageUrl);
 		this.places.push(place);
-		// this.storage.set('places', this.places)
-		// 	.then()
-		// 	.catch(
-		// 		err => {
-		// 			this.places.splice(this.places.indexOf(place), 1);
-		// 		});
+	
 	}
 
 	loadPlaces() {
 		return this.places.slice();
+	}
+
+	deletePlace(index: number) {
+		const place = this.places[index];
+		this.places.splice(index, 1);
+		
 	}
 }

@@ -6,6 +6,9 @@ import { Location } from '../../models/location';
 import { PlacesService } from '../../services/places';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { File } from '@ionic-native/file';
+
+declare var cordova: any;
 
 @IonicPage()
 @Component({
@@ -18,13 +21,14 @@ export class AddPlacePage {
     lng: -84.296312
 	};
 	locationIsSet = false;
-	imageUrl = '';
+	imageUrl: string = '';
 
   constructor(private modalCtrl: ModalController,
               private loadingCtrl: LoadingController,
               private toastCtrl: ToastController,
               private geolocation: Geolocation,
               private camera: Camera,
+              private file: File,
               private placesService: PlacesService) {
   }
 
@@ -78,31 +82,18 @@ export class AddPlacePage {
   }
 
   onTakePhoto() {
-    const options: CameraOptions = {
-    quality: 100,
-    destinationType: this.camera.DestinationType.DATA_URL,
-    encodingType: this.camera.EncodingType.JPEG,
-    mediaType: this.camera.MediaType.PICTURE
-  }
 
-  this.camera.getPicture(options).then((imageData) => {
-   // imageData is either a base64 encoded string or a file URI
-   // If it's base64:
-   this.imageUrl = imageData;
-   let base64Image = 'data:image/jpeg;base64,' + imageData;
- 
-   this.camera.cleanup();
+    this.camera.getPicture({
+        destinationType: this.camera.DestinationType.DATA_URL
+    }).then((imageData) => {
+      // imageData is a base64 encoded string
+        this.imageUrl = "data:image/jpeg;base64," + imageData;
+     
+    }, (err) => {
+        console.log(err);
+    });
+   }
+  
 
-  }, (err) => {
-     this.imageUrl = '';
-     const toast = this.toastCtrl.create({
-       message: 'Could not save the image. Please try again',
-       duration: 2500
-     });
-     toast.present();
-     this.camera.cleanup();
-  });
-
-  }
 
 }

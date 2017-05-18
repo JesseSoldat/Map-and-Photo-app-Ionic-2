@@ -24,6 +24,7 @@ export class PlacePage {
   }
 
   onDelete() {
+    this.placesService.deletePlace(this.index);
   	this.onLeave();
   }
 
