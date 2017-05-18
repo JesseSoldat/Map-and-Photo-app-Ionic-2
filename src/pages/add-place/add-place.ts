@@ -5,7 +5,7 @@ import { SetLocationPage } from '../set-location/set-location';
 import { Location } from '../../models/location';
 import { PlacesService } from '../../services/places';
 import { Geolocation } from '@ionic-native/geolocation';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
 
 declare var cordova: any;
@@ -86,11 +86,32 @@ export class AddPlacePage {
     this.camera.getPicture({
         destinationType: this.camera.DestinationType.DATA_URL
     }).then((imageData) => {
+        const currentName = imageData.replace(/^.*[\\\/]/, '');
+        const path = imageData.replace(/[^\/]*$/, '');
+        const newFileName = new Date().getUTCMilliseconds() + '.jpg';
+        this.file.moveFile(path, currentName, 
+          cordova.file.dataDirectory, newFileName)
+          .then((data) => {
+            console.log('file moved');
+            this.imageUrl = data.nativeURL;
+            this.camera.cleanup();
+          })
+          .catch(() => {
+            const toast = this.toastCtrl.create({
+                message: 'Could not save the image. Please try again',
+                duration: 2500
+             });
+             toast.present();
+          })
       // imageData is a base64 encoded string
         this.imageUrl = "data:image/jpeg;base64," + imageData;
      
     }, (err) => {
-        console.log(err);
+        const toast = this.toastCtrl.create({
+            message: 'Could not take the image. Please try again',
+            duration: 2500
+          });
+          toast.present();
     });
    }
   
