@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage,  } from 'ionic-angular';
+import { IonicPage, ModalController, LoadingController, ToastController } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
+import { SetLocationPage } from '../set-location/set-location';
+import { Location } from '../../models/location';
 
 @IonicPage()
 @Component({
@@ -8,10 +10,14 @@ import { NgForm } from '@angular/forms';
   templateUrl: 'add-place.html',
 })
 export class AddPlacePage {
+	location: Location = {
+		lat: 33.7748,
+    lng: 84.2963
+	};
 	locationIsSet = false;
 	imageUrl = '';
 
-  constructor() {
+  constructor(private modealCtrl: ModalController) {
   }
 
   ionViewDidLoad() {
@@ -22,6 +28,9 @@ export class AddPlacePage {
   }
 
   onOpenMap() {
+  	const modal = this.modealCtrl.create(SetLocationPage,
+  		{location: this.location});
+  	modal.present();
 
   }
 
