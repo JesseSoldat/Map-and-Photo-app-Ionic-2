@@ -13,6 +13,9 @@ import { PlacePage } from "../pages/place/place";
 import { SetLocationPage } from "../pages/set-location/set-location";
 import { PlaceService } from '../services/place';
 
+import { Geolocation } from '@ionic-native/geolocation';
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -40,7 +43,8 @@ import { PlaceService } from '../services/place';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    PlaceService
+    PlaceService,
+    Geolocation
   ]
 })
 export class AppModule {}

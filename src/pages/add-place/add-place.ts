@@ -4,6 +4,9 @@ import { NgForm } from '@angular/forms';
 import { SetLocationPage } from '../set-location/set-location';
 import { Location } from '../../models/location';
 
+import { Geolocation } from '@ionic-native/geolocation';
+
+
 @IonicPage()
 @Component({
   selector: 'page-add-place',
@@ -19,7 +22,8 @@ export class AddPlacePage {
 
   constructor(private modealCtrl: ModalController,
               private loadingCtrl: LoadingController,
-              private toastCtrl: ToastController) {
+              private toastCtrl: ToastController,
+              private geolocation: Geolocation,) {
   }
 
 
@@ -29,7 +33,7 @@ export class AddPlacePage {
 
   onOpenMap() {
   	const modal = this.modealCtrl.create(SetLocationPage,
-  		{location: this.location});
+  		{location: this.location, isSet: this.locationIsSet});
   	modal.present();
     modal.onDidDismiss(data => {
       if(data) {
@@ -44,7 +48,15 @@ export class AddPlacePage {
     const loader = this.loadingCtrl.create({
       content: 'Getting your Location...'
     });
-    // loader.present();
+    loader.present();
+    this.geolocation.getCurrentPosition()
+      .then(location => {
+        loader.dismiss();
+        console.log(location);
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 
   onTakePhoto() {

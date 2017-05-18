@@ -23,11 +23,10 @@ export class SetLocationPage {
   onSetMarker(event: any) {
     let { lat, lng } =  event.coords;
     this.marker = new Location(lat, lng)
-    console.log(this.marker);
   }
 
   onConfirm() {
-
+    this.viewCtrl.dismiss({location: this.marker});
   }
 
   onAbort() {
