@@ -14,14 +14,16 @@ export class SetLocationPage {
   constructor(private navParams: NavParams, 
   					private viewCtrl: ViewController) {
   	this.location = this.navParams.get('location');
+    if(this.navParams.get('isSet')) {
+      this.marker = this.location;
+    }
   }
 
-  ionViewDidLoad() {
-   
-  }
 
-  onSetMarker(event) {
-
+  onSetMarker(event: any) {
+    let { lat, lng } =  event.coords;
+    this.marker = new Location(lat, lng)
+    console.log(this.marker);
   }
 
   onConfirm() {
